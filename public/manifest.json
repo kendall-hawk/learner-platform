@@ -1,0 +1,102 @@
+/**
+ * 📱 第6个文件：public/manifest.json
+ * 
+ * 📁 文件位置: public/manifest.json
+ * 🎯 核心功能: PWA应用清单，定义应用在移动设备上的行为
+ * 🔧 关键作用: 配置应用图标、启动方式、快捷方式、安装体验
+ * 
+ * 📋 配置模块说明：
+ * - 应用信息: 名称、描述、语言设置
+ * - 显示模式: 独立应用模式（隐藏浏览器UI）
+ * - 图标系统: 多尺寸图标适配不同设备
+ * - 快捷方式: 长按图标显示的快速入口
+ * - 主题配置: 颜色和视觉样式
+ */
+
+{
+  // 应用基本信息
+  "name": "Modern English Learning Platform",     // 完整应用名称
+  "short_name": "EnglishPro",                    // 短名称（桌面图标下显示）
+  "description": "Advanced English learning with AI-powered features including smart dictionary, audio sync, and word frequency analysis",
+  
+  // 启动配置
+  "start_url": "/",                              // 应用启动时的默认页面
+  "display": "standalone",                       // 独立应用模式（类似原生应用）
+  "background_color": "#ffffff",                 // 启动画面背景色（白色）
+  "theme_color": "#1e40af",                     // 主题色（深蓝色）
+  "orientation": "portrait-primary",             // 首选屏幕方向（竖屏）
+  
+  // 应用分类和语言
+  "categories": ["education", "productivity"],    // 应用商店分类
+  "lang": "en",                                 // 主要语言（英语）
+  
+  // 应用图标配置 - 多尺寸适配不同设备和场景
+  "icons": [
+    {
+      "src": "/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"                          // 通用图标
+    },
+    {
+      "src": "/icon-96.png",
+      "sizes": "96x96", 
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png", 
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"                 // 支持自适应图标遮罩
+    },
+    {
+      "src": "/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"                 // 高分辨率 + 支持遮罩
+    }
+  ],
+  
+  // 应用快捷方式 - 长按图标时显示的快速入口
+  "shortcuts": [
+    {
+      "name": "Start Learning",                  // 快捷方式名称
+      "short_name": "Learn",                     // 短名称
+      "description": "Start your English learning session",
+      "url": "/dashboard",                       // 目标页面
+      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Word Frequency", 
+      "short_name": "WordFreq",
+      "description": "Analyze word frequency patterns",
+      "url": "/word-frequency",                  // 词频分析页面
+      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
+    }
+  ]
+}
