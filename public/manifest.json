@@ -1,20 +1,20 @@
 
 {
   
-  "name": "Modern English Learning Platform",     // 完整应用名称
-  "short_name": "EnglishPro",                    // 短名称（桌面图标下显示）
+  "name": "Modern English Learning Platform",     
+  "short_name": "EnglishPro",                    
   "description": "Advanced English learning with AI-powered features including smart dictionary, audio sync, and word frequency analysis",
   
   
-  "start_url": "/",                              // 应用启动时的默认页面
-  "display": "standalone",                       // 独立应用模式（类似原生应用）
-  "background_color": "#ffffff",                 // 启动画面背景色（白色）
-  "theme_color": "#1e40af",                     // 主题色（深蓝色）
-  "orientation": "portrait-primary",             // 首选屏幕方向（竖屏）
+  "start_url": "/",                              
+  "display": "standalone",                       
+  "background_color": "#ffffff",                 
+  "theme_color": "#1e40af",                     
+  "orientation": "portrait-primary",             
   
   
-  "categories": ["education", "productivity"],    // 应用商店分类
-  "lang": "en",                                 // 主要语言（英语）
+  "categories": ["education", "productivity"],    
+  "lang": "en",                                 
   
   
   "icons": [
