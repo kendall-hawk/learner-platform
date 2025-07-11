@@ -1,0 +1,45 @@
+{
+  "name": "modern-english-learning-platform",
+  "private": true,
+  "version": "3.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit",
+    "deploy": "npm run build && gh-pages -d dist",
+    "deploy:github": "npm run build && gh-pages -d dist -b gh-pages",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod --dir=dist",
+    "predeploy": "npm run build",
+    "postbuild": "node scripts/post-build.js"
+  },
+  "dependencies": {
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.5",
+    "pinia": "^2.1.7",
+    "@headlessui/vue": "^1.7.16",
+    "@heroicons/vue": "^2.0.18",
+    "axios": "^1.6.2",
+    "date-fns": "^2.30.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.0",
+    "@vitejs/plugin-vue": "^4.5.0",
+    "autoprefixer": "^10.4.16",
+    "gh-pages": "^6.1.0",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vite-plugin-pwa": "^0.17.0",
+    "vue-tsc": "^1.8.22",
+    "workbox-window": "^7.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/modern-english-learning.git"
+  },
+  "homepage": "https://your-username.github.io/modern-english-learning"
+}
