@@ -1,0 +1,72 @@
+<!--
+🌐 第5个文件：index.html
+
+📁 文件位置: 项目根目录/index.html
+🎯 核心功能: HTML应用入口，PWA配置，字体预加载
+🔧 关键作用: 定义页面基础结构、SEO元数据、PWA支持、性能优化
+
+📋 配置模块说明：
+- SEO优化: 完整的meta标签配置
+- PWA支持: manifest链接和移动端适配
+- 字体优化: Google Fonts预连接和加载
+- 性能优化: 关键资源预加载
+- 无障碍: 语义化HTML结构
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- 网站图标 -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- 移动端适配 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO元数据 -->
+    <meta name="description" content="Modern English Learning Platform with AI-powered features" />
+    
+    <!-- PWA主题色配置 -->
+    <meta name="theme-color" content="#1e40af" />
+    
+    <!-- 页面标题 -->
+    <title>Modern English Learning Platform</title>
+    
+    <!-- Google Fonts优化加载 -->
+    <!-- 预连接到Google字体服务器，提升加载速度 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 加载Inter字体，支持多种字重 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PWA相关配置 -->
+    <!-- PWA应用清单文件 -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- iOS Safari PWA支持 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="EnglishPro" />
+    
+    <!-- 性能优化：预加载关键资源 -->
+    <!-- 预加载Vue应用入口文件，提升首屏加载速度 -->
+    <link rel="modulepreload" href="/src/main.ts" />
+  </head>
+  
+  <body class="bg-gray-50 text-gray-900 antialiased">
+    <!-- Vue应用挂载点 -->
+    <!-- 
+      id="app": Vue应用的根容器
+      Vue3会将整个应用渲染到这个div中
+    -->
+    <div id="app"></div>
+    
+    <!-- Vue应用入口脚本 -->
+    <!-- 
+      type="module": ES模块加载方式
+      src="/src/main.ts": Vue应用启动文件
+      Vite会自动处理TypeScript编译和模块打包
+    -->
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
