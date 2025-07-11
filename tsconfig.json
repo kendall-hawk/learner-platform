@@ -1,0 +1,64 @@
+/**
+ * 🔧 第3个文件：tsconfig.json
+ * 
+ * 📁 文件位置: 项目根目录/tsconfig.json
+ * 🎯 核心功能: TypeScript编译器配置，支持Vue3+现代ES语法
+ * 🔧 关键作用: 配置TypeScript编译选项、模块解析、类型检查规则
+ * 
+ * 📋 配置模块说明：
+ * - 编译目标: ES2020现代语法支持
+ * - 模块系统: ESNext + bundler模式（适配Vite）
+ * - 严格模式: 启用所有TypeScript严格检查
+ * - Vue支持: 保留JSX语法，支持.vue文件
+ * - 路径映射: @/* 指向 src/* 目录
+ * - 性能优化: 跳过库检查，独立模块编译
+ */
+
+{
+  "compilerOptions": {
+    // 编译目标和库支持
+    "target": "ES2020",                          // 编译目标：ES2020现代语法
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],    // 支持的库：ES2020 + DOM API
+    
+    // 模块系统配置
+    "module": "ESNext",                          // 模块格式：ES模块
+    "moduleResolution": "bundler",               // 模块解析：bundler模式（Vite专用）
+    
+    // 文件处理选项
+    "allowImportingTsExtensions": true,          // 允许导入.ts扩展名
+    "resolveJsonModule": true,                   // 支持导入JSON文件
+    "isolatedModules": true,                     // 独立模块编译（提升性能）
+    "noEmit": true,                             // 不生成JS文件（由Vite处理）
+    
+    // Vue3和JSX支持
+    "jsx": "preserve",                          // 保留JSX语法（由Vue编译器处理）
+    "useDefineForClassFields": true,            // 使用标准类字段定义
+    
+    // 类型检查严格模式
+    "strict": true,                             // 启用所有严格类型检查
+    "noUnusedLocals": true,                     // 检查未使用的局部变量
+    "noUnusedParameters": true,                 // 检查未使用的函数参数
+    "noFallthroughCasesInSwitch": true,         // 检查switch语句的fallthrough
+    
+    // 性能优化
+    "skipLibCheck": true,                       // 跳过库文件类型检查（提升编译速度）
+    
+    // 路径映射配置
+    "baseUrl": ".",                             // 基础路径：项目根目录
+    "paths": {
+      "@/*": ["src/*"]                          // 路径别名：@指向src目录
+    }
+  },
+  
+  // 包含的文件类型
+  "include": [
+    "src/**/*.ts",                              // 包含所有TypeScript文件
+    "src/**/*.tsx",                             // 包含所有TSX文件
+    "src/**/*.vue"                              // 包含所有Vue单文件组件
+  ],
+  
+  // 引用其他配置文件
+  "references": [
+    { "path": "./tsconfig.node.json" }          // 引用Node.js环境配置
+  ]
+}
