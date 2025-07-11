@@ -71,17 +71,17 @@
   
   "shortcuts": [
     {
-      "name": "Start Learning",                  // 快捷方式名称
-      "short_name": "Learn",                     // 短名称
+      "name": "Start Learning",                  
+      "short_name": "Learn",                     
       "description": "Start your English learning session",
-      "url": "/dashboard",                       // 目标页面
+      "url": "/dashboard",                       
       "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
     },
     {
       "name": "Word Frequency", 
       "short_name": "WordFreq",
       "description": "Analyze word frequency patterns",
-      "url": "/word-frequency",                  // 词频分析页面
+      "url": "/word-frequency",                  
       "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
     }
   ]
