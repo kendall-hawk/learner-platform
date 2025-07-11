@@ -1,7 +1,7 @@
 /**
  * ⚡ vite.config.ts
  * 路径: project-root/vite.config.ts
- * 功能: Vite构建工具配置文件
+ * 功能: Vite构建工具配置文件（独立完整版）
  * 
  * 主要功能:
  * - 配置Vue3支持和TypeScript编译
@@ -9,19 +9,23 @@
  * - 设置路径别名@指向src目录
  * - 配置Service Worker和应用清单
  * - 优化构建性能和开发体验
- * - 集成部署配置系统
+ * - 支持GitHub Pages部署
  */
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
 import { resolve } from 'path'
-import { visualizer } from 'rollup-plugin-visualizer'
 
-// 🔧 导入部署配置 (ES modules语法)
-import { getDeployConfig } from './dist-deploy.config.js'
+// 🌍 环境变量配置
+const isProduction = process.env.NODE_ENV === 'production'
+const isGitHubPages = process.env.GITHUB_PAGES === 'true'
 
-// 🌍 获取当前部署环境配置
-const deployConfig = getDeployConfig(process.env.DEPLOY_TARGET || 'github-pages')
+// 📍 根据部署环境设置基础路径
+// GitHub Pages: /repository-name/
+// 其他平台: /
+const baseUrl = isGitHubPages 
+  ? `/${process.env.GITHUB_REPOSITORY?.split('/')[1] || 'modern-english-learning'}/`
+  : '/'
 
 // 🏗️ 导出Vite配置
 export default defineConfig({
@@ -79,19 +83,19 @@ export default defineConfig({
         background_color: '#ffffff',   // 背景颜色（白色）
         display: 'standalone',         // 独立应用模式
         orientation: 'portrait',       // 竖屏优先
-        start_url: deployConfig.publicPath || '/',    // 🔗 使用部署配置的路径
-        scope: deployConfig.publicPath || '/',
+        start_url: baseUrl,            // 启动URL
+        scope: baseUrl,
         
         // 📱 应用图标配置
         icons: [
           {
-            src: deployConfig.publicPath + 'icon-192.png',
+            src: baseUrl + 'icon-192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any maskable'
           },
           {
-            src: deployConfig.publicPath + 'icon-512.png',
+            src: baseUrl + 'icon-512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable'
@@ -103,19 +107,11 @@ export default defineConfig({
         lang: 'zh-CN',
         dir: 'ltr'
       }
-    }),
-    
-    // 📊 构建分析器（仅在分析模式下启用）
-    process.env.ANALYZE && visualizer({
-      filename: 'dist/stats.html',
-      open: true,
-      gzipSize: true,
-      brotliSize: true
     })
-  ].filter(Boolean), // 过滤掉falsy值
+  ],
   
-  // 🛤️ 设置基础路径（从部署配置获取）
-  base: deployConfig.publicPath,
+  // 🛤️ 设置基础路径
+  base: baseUrl,
   
   // 🔗 路径解析配置
   resolve: {
@@ -135,17 +131,17 @@ export default defineConfig({
   
   // 🏗️ 构建配置
   build: {
-    // 输出目录（从部署配置获取）
-    outDir: deployConfig.outputDir || 'dist',
+    // 输出目录
+    outDir: 'dist',
     
-    // 静态资源目录（从部署配置获取）
-    assetsDir: deployConfig.assetsDir || 'assets',
+    // 静态资源目录
+    assetsDir: 'assets',
     
-    // 源码映射（从部署配置获取）
-    sourcemap: deployConfig.sourceMap || false,
+    // 源码映射（生产环境关闭以减小体积）
+    sourcemap: !isProduction,
     
-    // 压缩方式（从部署配置获取）
-    minify: deployConfig.minify || 'esbuild',
+    // 压缩方式
+    minify: isProduction ? 'esbuild' : false,
     
     // 目标环境
     target: 'esnext',
@@ -162,10 +158,7 @@ export default defineConfig({
           ui: ['@headlessui/vue', '@heroicons/vue'],
           
           // 工具库
-          utils: ['axios', 'date-fns', 'lodash-es'],
-          
-          // VueUse工具集
-          vueuse: ['@vueuse/core', '@vueuse/head']
+          utils: ['axios', 'date-fns', 'lodash-es']
         },
         
         // 📝 资源命名
@@ -184,23 +177,14 @@ export default defineConfig({
           if (/\.(woff2?|eot|ttf|otf)(\?.*)?$/i.test(assetInfo.name || '')) {
             return `fonts/[name]-[hash].${ext}`
           }
-          return `${deployConfig.assetsDir || 'assets'}/[name]-[hash].${ext}`
+          return `assets/[name]-[hash].${ext}`
         }
-      },
-      
-      // 🔧 外部依赖（不打包到bundle中）
-      external: process.env.NODE_ENV === 'development' ? [] : []
+      }
     },
     
     // ⚡ 性能优化
     chunkSizeWarningLimit: 1000,
-    reportCompressedSize: false,
-    
-    // 🛡️ 安全配置
-    cssCodeSplit: true,
-    dynamicImportVarsOptions: {
-      warnOnError: true
-    }
+    reportCompressedSize: false
   },
   
   // 🔧 开发服务器配置
@@ -210,13 +194,13 @@ export default defineConfig({
     cors: true,
     
     // 🔄 代理配置（开发环境API代理）
-    proxy: process.env.NODE_ENV === 'development' ? {
+    proxy: {
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
-    } : {}
+    }
   },
   
   // 🎯 预览服务器配置
@@ -228,19 +212,7 @@ export default defineConfig({
   
   // 📐 CSS配置
   css: {
-    devSourcemap: true,
-    
-    // PostCSS配置
-    postcss: {
-      plugins: []
-    },
-    
-    // CSS预处理器配置
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "@/styles/variables.scss";`
-      }
-    }
+    devSourcemap: true
   },
   
   // 🎛️ 环境变量定义
@@ -249,14 +221,14 @@ export default defineConfig({
     __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
     
     // 应用信息
-    __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '1.0.0'),
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
     __COMMIT_HASH__: JSON.stringify(process.env.GITHUB_SHA || 'unknown'),
     
     // 环境标识
-    __DEV__: process.env.NODE_ENV === 'development',
-    __PROD__: process.env.NODE_ENV === 'production',
-    __TEST__: process.env.NODE_ENV === 'test'
+    __DEV__: !isProduction,
+    __PROD__: isProduction,
+    __GITHUB_PAGES__: isGitHubPages
   },
   
   // ⚡ 优化依赖
@@ -269,24 +241,13 @@ export default defineConfig({
       '@heroicons/vue/24/outline',
       '@heroicons/vue/24/solid',
       'axios',
-      'date-fns',
-      'lodash-es'
-    ],
-    exclude: [
-      '@vueuse/core'
+      'date-fns'
     ]
   },
   
   // 🔍 ESBuild配置
   esbuild: {
-    drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],
+    drop: isProduction ? ['console', 'debugger'] : [],
     target: 'esnext'
-  },
-  
-  // 📊 实验性功能
-  experimental: {
-    renderBuiltUrl(filename: string) {
-      return deployConfig.publicPath + filename
-    }
   }
 })
