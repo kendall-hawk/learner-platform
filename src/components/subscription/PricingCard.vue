@@ -1,5 +1,5 @@
 <!--
-/**
+/**6. src/components/subscription/PricingCard.vue
  * 💳 PricingCard.vue - 定价卡片组件
  * 
  * 📋 功能概述:
